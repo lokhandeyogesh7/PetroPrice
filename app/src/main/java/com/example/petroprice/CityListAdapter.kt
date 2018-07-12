@@ -6,9 +6,10 @@ import android.widget.TextView
 import com.example.petroprice.gson.citylist.City
 import android.view.LayoutInflater
 import android.view.View
+import com.example.petroprice.global.RecyclerItemClickListener
 
 
-class CityListAdapter(val arrayCity: ArrayList<City>, val recyclerItemClickListener: RecyclerItemClickListener) : RecyclerView.Adapter<CityListAdapter.CityHolder>() {
+class CityListAdapter(val arrayCity: ArrayList<City>, val recyclerItemClickListener: RecyclerItemClickListener, val presenter: MainContract.presenter?) : RecyclerView.Adapter<CityListAdapter.CityHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
@@ -30,6 +31,8 @@ class CityListAdapter(val arrayCity: ArrayList<City>, val recyclerItemClickListe
 
     override fun onBindViewHolder(holder: CityHolder, position: Int) {
         holder.tvCityName.text = arrayCity[position].name
+
+        presenter!!.requestDataFromCity(arrayCity[position].id!!)
 
         holder.itemView.setOnClickListener {
             recyclerItemClickListener.ontemClick(arrayCity[position])

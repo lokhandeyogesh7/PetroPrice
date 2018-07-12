@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.example.petroprice.global.RecyclerItemClickListener
 import com.example.petroprice.gson.citylist.City
 import com.example.petroprice.gson.citylist.CityList
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity(), MainContract.MainView {
         recyclerItemClickListener = object : RecyclerItemClickListener {
             override fun ontemClick(city: City) {
                 Toast.makeText(this@MainActivity, "Clicked ${city.name}", Toast.LENGTH_SHORT).show()
+                presenter!!.requestDataFromCity(city.id!!)
             }
         }
 
@@ -40,11 +42,9 @@ class MainActivity : AppCompatActivity(), MainContract.MainView {
     }
 
     override fun setDataToRecyclerView(responseCity: CityList?) {
-
         rvCityList.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        val adapter = CityListAdapter(responseCity!!.cities as ArrayList<City>, recyclerItemClickListener!!)
+        val adapter = CityListAdapter(responseCity!!.cities as ArrayList<City>, recyclerItemClickListener!!,presenter)
         rvCityList.adapter = adapter
-
     }
 
     override fun onResponseFailure(throwable: Throwable) {

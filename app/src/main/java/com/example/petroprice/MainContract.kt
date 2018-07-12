@@ -9,6 +9,8 @@ interface MainContract {
         fun onDestroy()
 
         fun requestDatafromServer()
+
+        fun requestDataFromCity(cityId: Int)
     }
 
 
@@ -20,6 +22,8 @@ interface MainContract {
 
         fun setDataToRecyclerView(responseCity: CityList?)
 
+        //fun setDatatoDetails(responseCity: City)
+
         fun onResponseFailure(throwable: Throwable)
 
     }
@@ -28,12 +32,24 @@ interface MainContract {
     interface getCityInteractor {
 
         interface onFinishedListener {
-            fun onFinished(responseCity: CityList?)
+            fun onFinished(url: String?, response: Any?)
 
             fun onFailure(t: Throwable)
         }
 
         fun getCityArraylist(mOnFinishedListener: onFinishedListener)
+
+        fun getDataForCity(mOnFinishListener: onFinishedListener)
+    }
+
+    interface getDataInteractor {
+        interface onFinishedListener {
+            fun onFinished(cityId: Int)
+
+            fun onFailure(t: Throwable)
+        }
+
+
 
     }
 

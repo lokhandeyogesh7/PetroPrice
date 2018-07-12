@@ -18,4 +18,5 @@ class CityList {
     @Expose
     var cities: List<City>? = null
 
+
 }
